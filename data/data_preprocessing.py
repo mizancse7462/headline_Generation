@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[65]:
-
 
 import csv
 import os
@@ -22,46 +20,28 @@ from nltk.tokenize import word_tokenize
 import pickle
 import nltk
 nltk.download('punkt')
-nltk.download('stopwords')
-
-
-# In[66]:
-    
+nltk.download('stopwords')    
 
 #reading csv
 train = pd.read_csv('articles_small.csv', encoding='ISO-8859-1',low_memory=False)
 #train
 
 
-# In[67]:
-
-
 train = train[train.notnull()]
 #train
 
-
-# In[68]:
 
 
 train = train.dropna(how='any') 
 #train
 
 
-# In[69]:
-
-
 heads = train['title']
 #heads
 
 
-# In[70]:
-
-
 descs = train['content']
 #descs
-
-
-# In[71]:
 
 
 title_list = []
@@ -70,13 +50,9 @@ for i in heads:
     title_list.append(title)  
 
 
-# In[72]:
-
-
 title_list
 
 
-# In[73]:
 
 
 content_list = []
@@ -85,104 +61,49 @@ for i in descs:
     content_list.append(descs)
 
 
-# In[74]:
-
-
 content_list[0]
-
-
-# In[75]:
-
 
 
 title_list = [''.join(c for c in s if c not in string.punctuation) for s in title_list]
 
 
-# In[76]:
-
-
 content_list = [''.join(c for c in s if c not in string.punctuation) for s in content_list]
-
-
-# In[77]:
 
 
 tokenized_title = [word_tokenize(i) for i in title_list]
 
 
-# In[78]:
-
-
 tokenized_title
-
-
-# In[79]:
-
 
 tokenized_content = [word_tokenize(i) for i in content_list]
 
-
-# In[80]:
-
-
 tokenized_content[0]
-
-
-# In[81]:
 
 
 stop = stopwords.words('english')
 
 
-# In[82]:
-
-
 filtered_title = [word for word in tokenized_title if word not in stop]
-
-
-# In[83]:
 
 
 filtered_title
 
 
-# In[84]:
-
-
 filtered_content = [word for word in tokenized_content if word not in stop]
-
-
-# In[85]:
 
 
 filtered_content
 
 
-# In[86]:
-
-
 title_new = [' '.join(c for c in s if c not in string.punctuation) for s in filtered_title]
-
-
-# In[87]:
 
 
 content_new = [' '.join(c for c in s if c not in string.punctuation) for s in filtered_content]
 
-
-# In[88]:
-
-
 title_new
 
 
-# In[89]:
-
-
 content_new
-
-
-# In[90]:
 
 
 final_list = pd.DataFrame(
@@ -191,13 +112,7 @@ final_list = pd.DataFrame(
     })
 
 
-# In[91]:
-
-
 final_list.to_pickle('tokenized_data.pickle')
-
-
-# In[92]:
 
 
 df2 = pd.read_pickle('tokenized_data.pickle')
@@ -209,19 +124,6 @@ test_data = df2.iloc[13001:14256]
 test_data.to_pickle('test_data.pkl')
 
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
